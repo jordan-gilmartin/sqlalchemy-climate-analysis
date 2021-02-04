@@ -40,8 +40,8 @@ def welcome():
         f"/api/v1.0/precipitation<br/>"
         f"/api/v1.0/stations<br/>"
         f"/api/v1.0/tobs<br/>"
-        f"/api/v1.0/<start>" 
-        f"/api/v1.0/<start>/<end>"
+        f"/api/v1.0/start<br/>"         
+        f"/api/v1.0/start/end"
     )
 
 
@@ -55,14 +55,9 @@ def precipitation():
 
     session.close()
 
-    # Create a dictionary from the row data and append to a list 
-    measurement = []
-    for date, prcp in dateprcp:
-        dateprcp_dict = {}
-        dateprcp_dict[date] = prcp
-        measurement.append(dateprcp_dict)
-
-    return jsonify(measurement)    
+    # Create a dictionary from the row data 
+    dateprcp_dict = {date: prcp for date, prcp in dateprcp}
+    return jsonify(dateprcp_dict)
         
     
     
@@ -87,7 +82,7 @@ def tobs():
     # Create our session (link) from Python to the DB
     session = Session(engine)
 
-    # Query all stations
+    # Query data for most active station
     tempfreq = session.query(meas.station, meas.date, meas.tobs).filter(meas.station == 'USC00519281').filter(meas.date > '2016-08-23').order_by(meas.date).all()
 
     session.close()
@@ -96,56 +91,45 @@ def tobs():
     temps = list(np.ravel(tempfreq))
 
     return jsonify(temps)
-   
-      
-   
+
+
+    
 @app.route("/api/v1.0/<start>")
 def start_date(start):
-    """Fetch the Justice League character whose real_name matches
-       the path variable supplied by the user, or a 404 if not."""
+    
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+    
+    # Query funcs to grab data that will tie back to input from user
+    sel = [func.min(meas.tobs), func.max(meas.tobs), func.avg(meas.tobs)]
 
-    canonicalized = start.replace(" ", "").lower()
-    for date in measurement:
-        search_date = date["date"].replace(" ", "").lower()
+    funcs = session.query(*sel).filter(meas.date >= start).all()
 
-        if search_date == canonicalized:
-            return jsonify(date)
+    session.close()
+        
+    # Convert list of tuples into normal list
+    output = list(np.ravel(funcs))
+    return jsonify(output)
 
-    return jsonify({"error": f"Date of {start} not found."}), 404
+
+@app.route("/api/v1.0/<start>/<end>")
+def start_end(start, end):
+    
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+    
+    # Query funcs to grab data that will tie back to input from user
+    sel = [func.min(meas.tobs), func.max(meas.tobs), func.avg(meas.tobs)]
+
+    funcs = session.query(*sel).filter(meas.date >= start).filter(meas.date <= end).all()
+
+    session.close()
+        
+    # Convert list of tuples into normal list
+    output = list(np.ravel(funcs))
+    return jsonify(output)
    
-   
-   
-   
-   
-   
-   
-    # # Convert list of tuples into normal list
-    # all_names = list(np.ravel(results))
-
-    # return jsonify(all_names)
-
-
-# @app.route("/api/v1.0/passengers")
-# def passengers():
-#     # Create our session (link) from Python to the DB
-#     session = Session(engine)
-
-#     """Return a list of passenger data including the name, age, and sex of each passenger"""
-#     # Query all passengers
-#     results = session.query(Passenger.name, Passenger.age, Passenger.sex).all()
-
-#     session.close()
-
-#     # Create a dictionary from the row data and append to a list of all_passengers
-#     all_passengers = []
-#     for name, age, sex in results:
-#         passenger_dict = {}
-#         passenger_dict["name"] = name
-#         passenger_dict["age"] = age
-#         passenger_dict["sex"] = sex
-#         all_passengers.append(passenger_dict)
-
-#     return jsonify(all_passengers)
+    
 
 
 if __name__ == '__main__':
