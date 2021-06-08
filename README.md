@@ -1,4 +1,4 @@
-# sqlalchemy-challenge
+# sqlalchemy-climate-analysis
 
 This exercise will entail performing climate analysis on the area Honolulu, Hawaii.
 
@@ -20,7 +20,7 @@ I will use Python and SQLAlchemy to do basic climate analysis and data explorati
 
 - Finally, I plotted the results using the DataFrame `plot` method and I used Pandas to print the summary statistics for the precipitation data.
 
-  [![precipitation](https://github.com/RutgersCodingBootcamp/RUT-JER-DATA-PT-10-2020-U-C/raw/main/02-Homework/10-Advanced-Data-Storage-and-Retrieval/Instructions/Images/precipitation.png)](https://github.com/RutgersCodingBootcamp/RUT-JER-DATA-PT-10-2020-U-C/blob/main/02-Homework/10-Advanced-Data-Storage-and-Retrieval/Instructions/Images/precipitation.png)
+  ![precipitation](Images/PrecipAnalysis.png)
 
   
 

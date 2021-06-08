@@ -51,7 +51,8 @@ def precipitation():
     session = Session(engine)
 
     # Query dates and prcp levels for the last year
-    dateprcp = session.query(meas.date, meas.prcp).filter(meas.date > '2016-08-23').order_by(meas.date).all()
+    dateprcp = session.query(meas.date, meas.prcp).\
+    filter(meas.date > '2016-08-23').order_by(meas.date).all()
 
     session.close()
 
@@ -83,7 +84,9 @@ def tobs():
     session = Session(engine)
 
     # Query data for most active station
-    tempfreq = session.query(meas.station, meas.date, meas.tobs).filter(meas.station == 'USC00519281').filter(meas.date > '2016-08-23').order_by(meas.date).all()
+    tempfreq = session.query(meas.station, meas.date, meas.tobs).\
+    filter(meas.station == 'USC00519281').\
+    filter(meas.date > '2016-08-23').order_by(meas.date).all()
 
     session.close()
 
@@ -121,7 +124,9 @@ def start_end(start, end):
     # Query funcs to grab data that will tie back to input from user
     sel = [func.min(meas.tobs), func.max(meas.tobs), func.avg(meas.tobs)]
 
-    funcs = session.query(*sel).filter(meas.date >= start).filter(meas.date <= end).all()
+    funcs = session.query(*sel).\
+    filter(meas.date >= start).\
+    filter(meas.date <= end).all()
 
     session.close()
         
