@@ -42,9 +42,8 @@ I will use Python and SQLAlchemy to do basic climate analysis and data explorati
 
   - Plotted the results as a histogram with `bins=12`.
 
-    [![station-histogram](https://github.com/RutgersCodingBootcamp/RUT-JER-DATA-PT-10-2020-U-C/raw/main/02-Homework/10-Advanced-Data-Storage-and-Retrieval/Instructions/Images/station-histogram.png)](https://github.com/RutgersCodingBootcamp/RUT-JER-DATA-PT-10-2020-U-C/blob/main/02-Homework/10-Advanced-Data-Storage-and-Retrieval/Instructions/Images/station-histogram.png)
+    ![station-histogram](Images/stationanalysis.png)
 
-  
 
 ------
 
