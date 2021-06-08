@@ -64,6 +64,9 @@ Now that I have completed the initial analysis, I designed a Flask API based on 
 - `/api/v1.0/precipitation`
   - Convert the query results to a dictionary using `date` as the key and `prcp` as the value.
   - Return the JSON representation of the dictionary.
+
+![FlaskPrecipRoute](Images/FlaskPrecipRoute.png)
+
 - `/api/v1.0/stations`
   - Return a JSON list of stations from the dataset.
 - `/api/v1.0/tobs`
