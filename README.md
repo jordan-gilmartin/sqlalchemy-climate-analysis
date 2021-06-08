@@ -58,6 +58,9 @@ Now that I have completed the initial analysis, I designed a Flask API based on 
 - `/`
   - Home page.
   - List all available routes.
+
+![FlaskMainRoute](Images/FlaskMainRoute.png)
+
 - `/api/v1.0/precipitation`
   - Convert the query results to a dictionary using `date` as the key and `prcp` as the value.
   - Return the JSON representation of the dictionary.
