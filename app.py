@@ -106,7 +106,7 @@ def start_date(start):
     # Query funcs to grab data that will tie back to input from user
     sel = [func.min(meas.tobs), func.max(meas.tobs), func.avg(meas.tobs)]
 
-    funcs = session.query(*sel).filter(meas.date >= start).all()
+    funcs = session.query(*sel).filter(meas.date == start).all()
 
     session.close()
         
